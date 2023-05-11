@@ -10,44 +10,54 @@ import Modal from "./Modal";
 
 export default function Home() {
     const [categories, setCategories] = useState(() => {
-        const savedCategories = localStorage.getItem("categories");
-        return savedCategories ? JSON.parse(savedCategories) : GetCategories;
+        if (typeof window !== "undefined") {
+            const savedCategories = localStorage.getItem("categories");
+            return savedCategories ? JSON.parse(savedCategories) : GetCategories;
+        } else {
+            return GetCategories;
+        }
     });
     const [toggleModal, setToggleModal] = useState(false);
     const [message, setMessage] = useState("");
+    const [allVoted, setAllVoted] = useState(false);
     const radioRefs = useRef({});
 
     useEffect(() => {
-        const savedCategories = localStorage.getItem("categories");
-        if (savedCategories) {
-            const parsedCategories = JSON.parse(savedCategories);
-            setCategories(parsedCategories);
+        if (typeof window !== "undefined") {
+            const savedCategories = localStorage.getItem("categories");
+            if (savedCategories) {
+                const parsedCategories = JSON.parse(savedCategories);
+                setCategories(parsedCategories);
 
-            let hasVoted = false;
-            let votedEntries = [];
-            parsedCategories.forEach((category) => {
-                const selectedEntry = category.entries.find((entry) => entry.voted);
-                if (selectedEntry) {
-                    hasVoted = true;
-                    votedEntries.push(selectedEntry.title);
+                let hasVoted = false;
+                let votedEntries = [];
+                parsedCategories.forEach((category) => {
+                    const selectedEntry = category.entries.find((entry) => entry.voted);
+                    if (selectedEntry) {
+                        hasVoted = true;
+                        votedEntries.push(selectedEntry.title);
+                    }
+                });
+
+                if (hasVoted) {
+                    setMessage(`You have already voted for: ${votedEntries.join(", ")}`);
+                    setToggleModal(true);
                 }
-            });
-
-            if (hasVoted) {
-                setMessage(`You have already voted for: ${votedEntries.join(", ")}`);
-                setToggleModal(true);
+            } else {
+                setCategories(GetCategories);
             }
-        } else {
-            setCategories(GetCategories);
         }
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("categories", JSON.stringify(categories));
+        if (typeof window !== "undefined") {
+            localStorage.setItem("categories", JSON.stringify(categories));
+        }
     }, [categories]);
 
-    // enables the button submit if all category has a voted item
-    const allVoted = categories.every((category) => category.entries.some((entry) => entry.voted));
+    useEffect(() => {
+        setAllVoted(categories.every((category) => category.entries.some((entry) => entry.voted)));
+    }, [categories]);
 
     // handles the submission of votes and checks if user already voted on an item
     const handleVote = () => {
@@ -113,9 +123,13 @@ export default function Home() {
                                             name={category.category}
                                             value={entry.title}
                                             checked={entry.voted}
-                                            onChange={() => handleRadioChange(categoryIndex, entryIndex)}
+                                            onChange={() =>
+                                                handleRadioChange(categoryIndex, entryIndex)
+                                            }
                                             ref={(el) =>
-                                                (radioRefs.current[`${category.category}-${entry.title}`] = el)
+                                                (radioRefs.current[
+                                                    `${category.category}-${entry.title}`
+                                                ] = el)
                                             }
                                         />
                                     </Entry>
