@@ -1,0 +1,25 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .wrapper {
+        @apply grid place-items-center;
+    }
+
+    .body {
+        @apply flex flex-col h-full gap-2 px-12 py-4 shadow-sm rounded-2xl;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .title {
+        @apply text-center;
+    }
+
+    .imageContainer {
+        @apply h-40 w-24 min-w-[6rem];
+    }
+
+    .image {
+        @apply object-cover w-auto h-full;
+    }
+}

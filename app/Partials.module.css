@@ -1,0 +1,26 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .wrapper {
+        @apply flex flex-col grow;
+    }
+
+    .header,
+    .footer {
+        @apply flex items-center justify-center grow-0;
+    }
+
+    .header {
+        @apply py-8 text-3xl text-white;
+        background-color: #363636;
+    }
+
+    .main {
+        @apply flex grow;
+    }
+
+    .footer {
+        @apply py-4;
+    }
+}

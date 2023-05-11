@@ -1,0 +1,63 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center font-medium text-center align-middle transition-all border rounded cursor-pointer;
+        border-color: #3f4119;
+    }
+
+    .btn:disabled {
+        @apply cursor-default pointer-events-none opacity-60;
+    }
+
+    .orange,
+    .option > input:checked + .btn {
+        background-color: hsl(49, 78%, 55%);
+    }
+
+    .orange:hover,
+    .option > input:checked + .btn:hover {
+        background-color: hsl(49, 78%, 65%);
+    }
+
+    .orange:active,
+    .option > input:checked + .btn:active {
+        background-color: hsl(49, 78%, 45%);
+    }
+
+    .grey,
+    .option > .btn {
+        background-color: hsl(49, 0%, 55%);
+    }
+
+    .grey:hover,
+    .option > .btn:hover {
+        background-color: hsl(49, 0%, 65%);
+    }
+
+    .grey:active,
+    .option > .btn:active {
+        background-color: hsl(49, 0%, 45%);
+    }
+
+    .sm {
+        @apply px-4 py-1;
+    }
+
+    .md {
+        @apply px-8 py-3;
+    }
+
+    .option {
+        @apply relative flex;
+    }
+
+    .option > input {
+        @apply absolute inset-0 w-full h-full opacity-0 left-full bottom-full;
+    }
+
+    .option > .btn {
+        @apply w-full text-white border-0 rounded-none;
+    }
+}

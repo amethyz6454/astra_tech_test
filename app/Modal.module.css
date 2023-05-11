@@ -1,0 +1,33 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .modal {
+        @apply fixed inset-0 transition-all opacity-0 pointer-events-none;
+    }
+
+    .modal.active {
+        @apply opacity-100 pointer-events-auto;
+    }
+
+    .modal * {
+        @apply transition-all;
+    }
+
+    .body {
+        @apply absolute z-20 p-8 scale-0 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg top-1/2 left-1/2;
+    }
+
+    .backdrop {
+        @apply absolute inset-0 z-10;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .active > .body {
+        @apply scale-100;
+    }
+
+    .active > .backdrop {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}

@@ -1,0 +1,17 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .wrapper {
+        background-color: #f6a131;
+    }
+
+    .head {
+        @apply grid p-1 text-lg place-items-center;
+        background-color: #e6c635;
+    }
+
+    .body {
+        @apply grid grid-cols-1 p-4 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
+    }
+}
